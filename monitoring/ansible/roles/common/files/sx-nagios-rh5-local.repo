@@ -1,0 +1,5 @@
+[sx-nagios-local]
+Name=SX nagios local repo
+baseurl=http://192.168.1.254/5/
+enabled=1
+gpgcheck=0

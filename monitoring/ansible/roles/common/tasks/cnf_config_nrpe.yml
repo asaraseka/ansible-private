@@ -1,0 +1,30 @@
+---
+ - name: Add NRPE config
+   copy: src=nrpe.cfg dest=/etc/nagios/nrpe.cfg owner=root group=root mode=644
+   sudo: yes
+   notify: restart nrpe
+   
+   
+ - name: Create custom plugins directory
+   file: path=/usr/lib64/nagios/customplugins state=directory mode=0755
+   sudo: yes
+
+ - name: Set custom plugins   
+   copy: src={{ item }} dest=/usr/lib64/nagios/customplugins/{{ item }} owner=root group=root mode=755
+   sudo: yes
+   with_items:
+   - check_mem
+
+# Only for ansible 2.0  
+# - name: Enable NRPE port
+#   iptables: chain=INPUT source=192.168.1.254 jump=ACCEPT
+#   become: yes
+
+ - name: disable iptables
+   sudo: yes
+   service: name=iptables state=stopped enabled=no
+   
+ - name: disable ip6tables
+   sudo: yes
+   service: name=ip6tables state=stopped enabled=no
+       

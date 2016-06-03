@@ -1,0 +1,4 @@
+ - hosts: service-hosts
+   remote_user: root
+   roles:
+     - common

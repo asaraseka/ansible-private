@@ -1,0 +1,33 @@
+---
+ #- name: Display all variables/facts known for a host
+ #  debug: var=hostvars[inventory_hostname] verbosity=4
+
+ - name: Set local nagios repo
+   #copy: src=sx-nagios-local.repo dest=/etc/yum.repos.d/sx-nagios-local.repo owner=root group=root mode=644
+   copy: src=sx-nagios-rh{{ ansible_distribution_major_version }}-local.repo dest=/etc/yum.repos.d/sx-nagios-local.repo owner=root group=root mode=644
+   sudo: yes
+   
+   #for 5RH python-hashlib-20081119-4.el5.x86_64.rpm
+   #python-simplejson
+ #- name: Copy python-simplejson
+ #  raw: wget -O /tmp/python-simplejson-2.0.9-8.el5.x86_64.rpm http://192.168.1.254/5/python-simplejson-2.0.9-8.el5.x86_64.rpm
+ #  sudo: yes
+ #  when: ansible_distribution_major_version==5
+   
+ #- name: Install python-simplejson
+ #  #raw: yum install --nogpg -y /tmp/python-simplejson-2.0.9-8.el5.x86_64.rpm
+ #  raw: rpm -i http://192.168.1.254/5/python-simplejson-2.0.9-8.el5.x86_64.rpm
+ #  sudo: yes
+ #  when: ansible_distribution_major_version!=5
+   
+ #- name: Copy python-hashlib
+ #  raw: wget -O /tmp/python-hashlib-20081119-4.el5.x86_64.rpm http://192.168.1.254/5/python-hashlib-20081119-4.el5.x86_64.rpm
+ #  sudo: yes
+ #  when: ansible_distribution_major_version==5
+   
+ - name: Install python-hashlib
+   #raw: yum install --nogpg -y /tmp/python-hashlib-20081119-4.el5.x86_64.rpm
+   raw: rpm -i http://192.168.1.254/5/python-hashlib-20081119-4.el5.x86_64.rpm
+   sudo: yes
+   when: ansible_distribution_major_version == "5"
+   ignore_errors: yes

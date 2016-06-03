@@ -1,0 +1,5 @@
+---
+ #- include: pkg_add_epel_repo.yml
+ - include: cnf_add_local_nagios_repo.yml
+ - include: pkg_add_nagios_plugins.yml
+ - include: cnf_config_nrpe.yml

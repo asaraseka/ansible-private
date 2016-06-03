@@ -1,0 +1,4 @@
+---
+ - name: restart nrpe
+   sudo: yes
+   service: name=nrpe state=restarted enabled=yes

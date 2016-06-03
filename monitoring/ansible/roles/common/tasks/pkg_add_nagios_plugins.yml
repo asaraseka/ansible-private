@@ -1,0 +1,26 @@
+---
+ - name: Install nagios plugins
+   yum: name={{ item }} state=present
+   sudo: yes
+   with_items:
+   #nagios-plugins-{users,load,disk,procs,swap} perl-Nagios-Plugin nrpe/nagios-nrpe (for RH6)
+   - nagios-plugins-users
+   - nagios-plugins-load
+   - nagios-plugins-disk
+   - nagios-plugins-procs
+   - nagios-plugins-swap
+   
+ - name: Install Perl module for Nagios
+   yum: name=perl-Nagios-Plugin state=present
+   sudo: yes
+   
+ - name: Install NRPE RHEL6
+   yum: name=nagios-nrpe state=present
+   sudo: yes
+   when: ansible_distribution_major_version == "6"
+   #notify: restart nrpe
+   
+ - name: Install NRPE RHEL5
+   yum: name=nrpe state=present
+   sudo: yes
+   when: ansible_distribution_major_version == "5"
